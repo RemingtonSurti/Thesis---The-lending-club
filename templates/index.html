@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html >
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+<head>
+  <meta charset="UTF-8">
+  <title>Loan Prediction API</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  
+</head>
+
+<body>
+ <div class="login">
+	<h1>Loan Default Predictor</h1>
+
+     <!-- Main Input For Receiving Query to our ML -->
+    <form action="{{ url_for('predict')}}"method="post">
+    	<input type="text" name="loan_amnt" placeholder="Loan Amount(1000$ to 40000$)" required="required" />
+        <input type="text" name="fico_avg_score" placeholder="Fico Score(350-800)" required="required" />
+        <input type="text" name="er_credit_open_date" placeholder="first credit line" required="required" />
+        <input type="text" name="term" placeholder="Term(36 or 60)" required="required" />
+		<input type="text" name="emp_length" placeholder="Employment Length(in years)" required="required" />
+        <input type="text" name="home_ownership" placeholder="Home Ownership" required="required" />
+        <input type="text" name="annual_inc" placeholder="Annual Income(USD)" required="required" />
+		<input type="text" name="verification_status" placeholder="Verification Status" required="required" />
+        <input type="text" name="dti" placeholder="Debt to income ratio" required="required" />
+        <input type="text" name="open_acc" placeholder="Open accounts" required="required" />
+		<input type="text" name="revol_util" placeholder="Revolving Bal" required="required" />
+        <input type="text" name="mort_acc" placeholder="Mortgage Accounts" required="required" />
+
+
+
+        <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+    </form>
+     <div class="result" align="center">
+						{% if result %}
+						{% for var, val in input_info.items() %}
+						<br><b>{{ var }}</b> : {{ val }}
+						{% endfor %}
+						<br>
+						<br> Loan Decision:
+						<p style="font-size:40px">{{ result }}</p>
+						{% endif %}
+     </div>
+
+   <br>
+   <br>
+   {{ prediction_text }}
+
+ </div>
+
+
+</body>
+</html>
